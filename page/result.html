@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>信息展示</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/animate.css" rel="stylesheet">
+    <!--<link href="../css/style.css" rel="stylesheet">-->
+    <style>
+        table{
+           width: 80%!important;
+            margin:2% auto;
+
+        }
+        td{
+            text-align: center!important;
+            vertical-align: middle!important;
+        }
+        .red{
+            color: red;
+            font-size: 18px;
+        }
+        .buy{
+            margin-right: 10px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+
+<div class="middle-box text-center loginscreen animated fadeInDown">
+    <h3>发售信息</h3>
+    <div class="red">您参与预购活动成功！</div>
+    <!--新的一期购买活动调整-->
+        <!--新的一期开始前，更改发售产品名称，发售时间，发售量。需将下面发售信息表格中的第二行复制，再粘贴，新建一行数据，将内部信息按照需求进行修改，之后将旧的发售信息删除即可-->
+    <!--新的一期购买活动调整-->
+    <table class="table table-bordered">
+        <tr><td>序号</td><td>发售产品</td><td>发售时间</td><td>发售量</td><td>操作</td></tr>
+        <tr><td>1</td><td>第二期根源链计算机</td><td>2018-01-18 20：08</td><td>1200台</td><td><button type="button"  id="buy1"  class=" buy btn btn-primary" disabled="true" title="尚未到达发售时间">购买</button><button  type="button" class=" notice btn btn-primary"  title="">公告</button></td></tr>
+    </table>
+    <br>
+
+    <h3>购买记录</h3>
+    <table class="table table-bordered" id="buyData">
+        <tr><td>序号</td><td>时间</td><td>产品</td><td>数量</td><td>qq</td><td>Email</td><td>状态</td><td>地址</td><td>联系人</td><td>电话</td><td>操作</td></tr>
+        <tr><td colspan="11">暂无数据</td></tr>
+    </table>
+</div>
+<!-- Mainly scripts -->
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/publicAttr.js"></script>
+<script src="../js/global.js"></script>
+<script src="../js/result.js"></script>
+
+</body>
+
+</html>

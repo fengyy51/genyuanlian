@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>注册</title>
+
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <!--<link href="../font-awesome/css/font-awesome.css" rel="stylesheet">-->
+    <link href="../css/plugins/iCheck/custom.css" rel="stylesheet">
+    <link href="../css/animate.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <style>
+        .vali_fail{
+            border:1px solid red;
+            background-color:#ddd;
+            color:Red;
+            padding-left:30px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+        #mycanvas{
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+
+<div class="middle-box text-center loginscreen   animated fadeInDown">
+    <div>
+        <h2>请填写购买信息</h2>
+        <div class="form-group">
+            <input type="text" id="qq"  class="form-control" placeholder="QQ号">
+        </div>
+        <div class="form-group">
+            <input type="email" id="email"  class="form-control" placeholder="邮箱" >
+        </div>
+        <div class="form-group">
+            <input type="text" id="num"  class="form-control" placeholder="订购数量(不超过两台)" >
+        </div>
+        <span class="vali_fail" style="display: none" id="qqNull">
+                qq号不可为空
+            </span>
+        <span class="vali_fail" style="display: none" id="emailNull">
+                邮箱不可为空
+            </span>
+        <span class="vali_fail" style="display: none" id="numNull">
+               订购数量不可为空
+            </span>
+        <span class="vali_fail" style="display: none" id="numWrong">
+              订购数量大小不合适,请重新输入
+            </span>
+        <span class="vali_fail" style="display: none" id="emailWrong">
+                邮箱格式不正确，请重新输入
+            </span>
+        <span class="vali_fail" style="display: none" id="qqWrong">
+                qq格式不正确，请重新输入
+            </span>
+        <button  class="btn btn-primary block full-width m-b" id="submit">提交</button>
+    </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="../js/jquery-3.1.1.min.js"></script>
+<script src="../js/bootstrap.min.js"></script>
+<script src="../js/publicAttr.js"></script>
+<script src="../js/global.js"></script>
+<script src="../js/buying.js"></script>
+
+</body>
+
+</html>

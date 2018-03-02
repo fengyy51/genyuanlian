@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>登录</title>
+    <link href="../css/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/animate.css" rel="stylesheet">
+    <link href="../css/style.css" rel="stylesheet">
+    <style>
+        .vali_fail{
+            border:1px solid red;
+            background-color:#ddd;
+            color:Red;
+            padding-left:30px;
+            padding: 5px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div class="form-group">
+                <input type="text" id="username"  class="form-control" placeholder="用户名" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="password"  class="form-control" placeholder="密码(4-16个字符,字母与数字的组合)" required>
+            </div>
+            <div class="form-group">
+                <input type="password" id="code"  class="form-control" style="margin-right:2px;width: 200px;float: left;" placeholder="输入验证码" required>
+                <canvas id="mycanvas" width='90' height='34'>
+                    您的浏览器不支持canvas，请换个浏览器试试~
+                </canvas>
+            </div>
+            <span class="vali_fail" style="display: none" id="nameNull">
+                用户名不可为空
+            </span>
+            <span class="vali_fail" style="display: none" id="pwdNull">
+                密码不可为空
+            </span>
+            <span class="vali_fail" style="display: none" id="codeNull">
+                验证码不可为空
+            </span>
+            <span class="vali_fail" style="display: none" id="pwdWrong">
+                密码格式不正确，请重新输入
+            </span>
+            <span class="vali_fail" style="display: none" id="valWrong">
+                用户名或者密码输入有误，请重新输入
+            </span>
+            <span class="vali_fail" style="display: none" id="codeWrong">
+                验证码不正确，请重新输入
+            </span>
+            <button type="submit" class="btn btn-primary block full-width m-b" id="submit" >登录</button>
+            <p class="text-muted text-center"><small>您还没有账号？</small></p>
+            <a class="btn btn-sm btn-white btn-block" href="register.html">注册</a>
+        </div>
+    </div>
+    <!-- Mainly scripts -->
+    <script src="../js/jquery-3.1.1.min.js"></script>
+    <script src="../js/bootstrap.min.js"></script>
+    <script src="../js/publicAttr.js"></script>
+    <script src="../js/global.js"></script>
+
+    <script>
+        $('#username').blur(function () {
+            var nameVal=$('#username').val();
+            if(nameVal==''){
+                $('#nameNull').css("display","block");
+            }else{
+                $('#nameNull').css("display","none");
+            }
+        });
+        $('#password').blur(function () {
+            var pwdVal=$('#password').val();
+            if(pwdVal==''){
+                $('#pwdNull').css("display","block");
+            }else{
+                $('#pwdNull').css("display","none");
+            }
+        });
+        $('#password').blur(function () {
+            var pwdVal=$('#password').val();
+//            var reg=/^[0-9a-zA-Z_\u3E00-\u9FA5]{3,15}$/;
+            var reg=/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{4,16}$/;
+            console.log(reg.test(pwdVal));
+            if(reg.test(pwdVal)){
+                $('#pwdWrong').css("display","none");
+            }else{
+                $('#pwdWrong').css("display","block");
+            }
+            console.log(reg.test(pwdVal));
+        })
+
+    </script>
+    <!--生成图片验证码-->
+    <script>
+
+        /*生成4位随机数*/
+        function rand(){
+            var str="0123456789fghabcdejkmnpqrstuvwxyz";
+            var arr=str.split("");
+            var validate="";
+            var ranNum;
+            for(var i=0;i<4;i++){
+                ranNum=Math.floor(Math.random()*23); //随机数在[0,35]之间
+                validate+=arr[ranNum];
+            }
+            console.log(validate);
+            code=validate;
+            return validate;
+        }
+//        $('#code').blur(function () {
+//            var codeVal=$('#code').val();
+//            console.log(code);
+//            if(codeVal!=code){
+//                $('#codeWrong').css("display","block");
+//            }else{
+//                $('#codeWrong').css("display","none");
+//            }
+//        });
+        /*干扰线的随机x坐标值*/
+        function lineX(){
+            var ranLineX=Math.floor(Math.random()*90);
+            return ranLineX;
+        }
+        /*干扰线的随机y坐标值*/
+        function lineY(){
+            var ranLineY=Math.floor(Math.random()*40);
+            return ranLineY;
+        }
+        function clickChange(){
+            var mycanvas=document.getElementById('mycanvas');
+            var cxt=mycanvas.getContext('2d');
+            cxt.fillStyle='#fff';
+            cxt.fillRect(0,0,90,40);
+            /*生成干扰线20条*/
+            for(var j=0;j<15;j++){
+                cxt.strokeStyle='#6c6c6c';
+                cxt.beginPath(); //若省略beginPath，则每点击一次验证码会累积干扰线的条数
+                cxt.moveTo(lineX(),lineY());
+                cxt.lineTo(lineX(),lineY());
+                cxt.lineWidth=0.5;
+                cxt.closePath();
+                cxt.stroke();
+            }
+            cxt.fillStyle='red';
+            cxt.font='bold 25px Arial';
+            cxt.fillText(rand(),15,25); //把rand()生成的随机数文本填充到canvas中
+        }
+        clickChange();
+        /*点击验证码更换*/
+        mycanvas.onclick=function(e){
+            e.preventDefault(); //阻止鼠标点击发生默认的行为
+            clickChange();
+        };
+        //改变多次点击验证码变蓝的问题
+        $('#mycanvas').bind("selectstart", function () { return false; });
+
+    </script>
+    <script>
+        $('#submit').click(function () {
+            var nameVal=$('#username').val();
+            var pwdVal=$('#password').val();
+            var codeVal=$('#code').val();
+            if(nameVal!=''&&pwdVal!=''&&codeVal!=''){
+                console.log(code);
+                console.log(codeVal);
+                if(codeVal!=code){
+                    $('#codeWrong').css("display","block");
+                }else{
+                    $('#codeWrong').css("display","none");
+                }
+                var vali_status=false;
+                $('.vali_fail').each(function () {
+                    if($(this).css("display")=='block'){
+                        vali_status=true;
+                    }
+                });
+                console.log(vali_status);
+                if(vali_status==false){
+                    $('#submit').attr("disabled",true);
+                    postForm();
+                }
+            }else{
+                alert("有必填项未按要求填写")
+            }
+        });
+        function postForm() {
+            var urlPostLog=urlServer+'/user/login';
+            var username=$('#username').val(),
+                password=$('#password').val();
+            $.ajax({
+                url:urlPostLog,
+                type:"POST",
+                data:{
+                    username: username,
+                    password:password,
+                },
+                success:function (data) {
+                    var code=data.code;
+                    if(code==200){
+                        var result=data.data.result;
+                        if(result==true){
+                            var userId=data.data.userId;
+                            //保存4个小时
+                            setCookie_time("userId",userId,4*3600);
+                            window.location.href='result.html';
+                        }else{
+                            $('#submit').removeAttr("disabled");
+                            alert("登陆失败，您的用户名或者密码有误！");
+                        }
+                    }
+                },
+                error:function (error) {
+                    $('#submit').removeAttr("disabled");
+                    console.log(error);
+                    alert("提交登陆信息失败！");
+                }
+            })
+        }
+    </script>
+</body>
+
+</html>
